@@ -42,6 +42,10 @@ app.post('/lists', (req, res)=> {
     (new List({ 'title': req.body.title}))
         .save()
         .then((list) => res.send(list))
-        .catch((error) => console.log.error());
+        .catch((error) => { });
+    //     const updateTitle = new List();
+    //     updateTitle.title = req.body.title;
+    //     updateTitle.save();
+    // console.log('updateTitle',updateTitle);
 });
 app.listen(3000, () => console.log("Server Connected on port 3000 right now"));
