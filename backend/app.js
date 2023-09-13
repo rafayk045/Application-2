@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 const mongoose = require('./database/mongoose');
 
+
 app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', 'http://localhost:4200'); // Replace with your frontend URL
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
