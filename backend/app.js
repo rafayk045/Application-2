@@ -31,7 +31,7 @@ POST -> Save Data
 PUT PATCH -> Update Data
 DELETE -> Delete data
 */
-
+//FOR USER
 app.get('/lists', (req, res)=> {
     List.find({}) // all the records in the database
     .then(lists => res.send(lists))
@@ -65,6 +65,34 @@ app.delete('/lists/:listId', (req,res) => {
     List.findByIdAndDelete(req.params.listId)
         .then((list) => res.send(list))
         .catch((error) => console.log(error));
+});
+
+//FOR TASK
+//http://localhost:3000/lists/:listId/tasks/:taskId'
+
+//get all the tasks
+app.get('/lists/:listId/tasks',(req, res) => {
+    Task.find({ _listId: req.params.listId })
+    .then((tasks) => res.send(tasks))
+    .catch((error) => console.log(error));
+});
+
+//save all the tasks
+app.post('/lists/:listId/tasks',(req, res) => {
+    (new Task({ '_listId': req.params.listId, 'title': req.body.title}))
+    .save()
+    .then((tasks) => res.send(tasks))
+    .catch((error) => console.log(error));
+});
+
+//get one task
+app.get('/lists/:listId/tasks/:taskId', async (req,res)  => {
+    const data = await Task.findOne({ _listId : req.params.listId, _id : req.params.taskId });
+    console.log('jhgjhghjghjhjgjhj',data);
+    res.send(data);
+    // Task.findOne({ _listid: req.params.listId, _id: req.params.taskId })
+    // .then((task) => res.send(task))
+    // .catch((error) => console.log(error));
 });
 
 app.listen(3000, () => console.log("Server Connected on port 3000 right now"));

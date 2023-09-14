@@ -8,12 +8,12 @@ const TaskSchema = new mongoose.Schema({
     },
     _listId: {
         type: mongoose.Types.ObjectId,
+        ref: 'List',
         required: true //no task could exist without a List Id
     },
     completed: {
         type: Boolean,
         default: false,
-        required: true
     }
 });
 
