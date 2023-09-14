@@ -62,8 +62,15 @@ app.patch('/lists/:listId', (req,res) => {
 });
 
 app.delete('/lists/:listId', (req,res) => {
+    const deleteTasks = (list) => {
+        Task.deleteMany({_listId: list._id})
+        .then(() => list)
+        .catch((error) => console.log(error));
+    };
+
+
     List.findByIdAndDelete(req.params.listId)
-        .then((list) => res.send(list))
+        .then((list) => res.send(deleteTasks(list)))
         .catch((error) => console.log(error));
 });
 
@@ -105,6 +112,12 @@ app.patch('/lists/:listId/tasks/:taskId', async (req,res)  => {
     //     .catch((error) => console.log(error));
     
 
+});
+
+app.delete('/lists/:listId/tasks/:taskId', (req,res) => {
+    Task.findByIdAndDelete({ _listId : req.params.listId, _id : req.params.taskId })
+        .then((task) => res.send(task))
+        .catch((error) => console.log(error));
 });
 
 app.listen(3000, () => console.log("Server Connected on port 3000 right now"));
