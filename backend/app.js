@@ -95,4 +95,16 @@ app.get('/lists/:listId/tasks/:taskId', async (req,res)  => {
     // .catch((error) => console.log(error));
 });
 
+app.patch('/lists/:listId/tasks/:taskId', async (req,res)  => {
+    const data = await Task.findOneAndUpdate({ _listId: req.params.listId, _id : req.params.taskId }, {$set: req.body});
+    console.log('..',data);
+    res.send(data);
+    
+    // Task.findOneAndUpdate({ _listid: req.params.listId, _id: req.params.taskId }, {$set: req.body})
+    //     .then((task) => res.send(task))
+    //     .catch((error) => console.log(error));
+    
+
+});
+
 app.listen(3000, () => console.log("Server Connected on port 3000 right now"));
